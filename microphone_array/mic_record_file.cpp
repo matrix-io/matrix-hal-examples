@@ -26,8 +26,6 @@
 #include "matrix_hal/microphone_array.h"
 // Enables using FIR filter with microphone array
 #include "matrix_hal/microphone_core.h"
-// Imports default FIR filter
-#include "matrix_hal/microphone_core_fir.h"
 
 ////////////////////////
 // INITIAL VARIABLES //
