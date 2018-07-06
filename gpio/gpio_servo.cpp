@@ -75,7 +75,9 @@ int main() {
   gpio.SetFunction(pin, PWMFunction);
 
   // If setting servo angle returns an error, log it
+  // SetServoAngle function sets a servo angle based on the min_pulse_ms
   if (!gpio.SetServoAngle(angle, min_pulse_ms, pin))
+    // Output error to console
     std::cerr << "ERROR: invalid input" << std::endl;
   else
     // Else output servo control info to console

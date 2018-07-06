@@ -70,13 +70,12 @@ int main() {
   gpio.SetFunction(pin, PWMFunction);
 
   // If setting PWM returns an error, log it
-  std::cout << frequency;
-  if (!gpio.SetPWM(
-          frequency, percentage,
-          pin))  // SetPWM function carries out PWM logic and outputs PWM signal
+  // SetPWM function carries out PWM logic and outputs PWM signal
+  if (!gpio.SetPWM(frequency, percentage, pin))
+    // Output error to console
     std::cerr << "ERROR: invalid input" << std::endl;
   else
-    // Else output GPIO info to console
+    // Else output GPIO PWM info to console
     std::cout << "[ Pin : " << pin << " ] [ Frequency : " << frequency
               << " ] [ Duty Percentage : " << percentage << " ]" << std::endl;
 

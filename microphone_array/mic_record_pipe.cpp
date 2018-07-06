@@ -7,7 +7,7 @@
 // INCLUDE STATEMENTS //
 ///////////////////////
 
-// Imports FIFO pipe supprot (https://en.wikipedia.org/wiki/Named_pipe)
+// Imports FIFO pipe support (https://en.wikipedia.org/wiki/Named_pipe)
 #include <sys/stat.h>
 // Linux file control options
 #include <fcntl.h>
@@ -41,7 +41,9 @@
 // (https://gflags.github.io/gflags/)
 
 // Grabs sampling frequency input from user
-DEFINE_int32(sampling_frequency, 16000, "Sampling Frequency");  // Argument example: "--sampling_frequency 48000"
+DEFINE_int32(
+    sampling_frequency, 16000,
+    "Sampling Frequency");  // Argument example: "--sampling_frequency 48000"
 // Grabs gain input from user
 DEFINE_int32(gain, -1, "Microphone Gain");  // Argument example: "--gain 5"
 
@@ -58,14 +60,6 @@ int main(int argc, char *agrv[]) {
   matrix_hal::MatrixIOBus bus;
   // Initialize bus and exit program if error occurs
   if (!bus.Init()) return false;
-
-  // Checks if kernel modules are installed then the microphones are accessible
-  // as an ALSA device
-  if (!bus.IsDirectBus()) {
-    std::cerr << "Kernel Modules has been loaded. Use ALSA implementation "
-              << std::endl;
-    return false;
-  }
 
   // Set user flags from gflags as variables
   int sampling_rate = FLAGS_sampling_frequency;
@@ -89,7 +83,8 @@ int main(int argc, char *agrv[]) {
   microphone_array.ShowConfiguration();
 
   // Calculate and set up beamforming delays for beamforming
-  microphone_array.CalculateDelays(0, 0, 1000, 320 * 1000);  // These are default values
+  microphone_array.CalculateDelays(0, 0, 1000,
+                                   320 * 1000);  // These are default values
 
   ///////////////////////
   // FIR FILTER SETUP //
@@ -105,7 +100,9 @@ int main(int argc, char *agrv[]) {
   /////////////////////
 
   // Create a buffer array for microphone input
-  int16_t buffer[microphone_array.Channels() + 1][microphone_array.SamplingRate() + microphone_array.NumberOfSamples()];
+  int16_t buffer[microphone_array.Channels() + 1]
+                [microphone_array.SamplingRate() +
+                 microphone_array.NumberOfSamples()];
 
   // For each channel plus the beamforming channel
   for (uint16_t c = 0; c < microphone_array.Channels() + 1; c++) {
@@ -134,7 +131,7 @@ int main(int argc, char *agrv[]) {
       // Open pipe
       std::string name = "/tmp/matrix_micarray_channel_" + std::to_string(c);
       named_pipe_handle = open(name.c_str(), O_WRONLY | O_NONBLOCK);
-      
+
       // For number of samples
       for (uint32_t s = 0; s < microphone_array.NumberOfSamples(); s++) {
         buffer[c][s] = microphone_array.At(s, c);

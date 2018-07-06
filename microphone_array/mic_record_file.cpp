@@ -47,26 +47,18 @@ DEFINE_int32(duration, 5,
 DEFINE_int32(gain, -1, "Microphone Gain");  // Argument example: "--gain 5"
 
 int main(int argc, char *agrv[]) {
-  // Parse command line flags with gflags utility
-  // (https://gflags.github.io/gflags/)
-  google::ParseCommandLineFlags(&argc, &agrv, true);
-
   ////////////////////
   // INITIAL SETUP //
   //////////////////
+
+  // Parse command line flags with gflags utility
+  // (https://gflags.github.io/gflags/)
+  google::ParseCommandLineFlags(&argc, &agrv, true);
 
   // Create MatrixIOBus object for hardware communication
   matrix_hal::MatrixIOBus bus;
   // Initialize bus and exit program if error occurs
   if (!bus.Init()) return false;
-
-  // Checks if kernel modules are installed then the microphones are accessible
-  // as an ALSA device
-  if (!bus.IsDirectBus()) {
-    std::cerr << "Kernel Modules has been loaded. Use ALSA implementation "
-              << std::endl;
-    return false;
-  }
 
   // Set user flags from gflags as variables
   int sampling_rate = FLAGS_sampling_frequency;
