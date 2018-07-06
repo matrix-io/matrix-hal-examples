@@ -9,8 +9,6 @@
 
 // Google gflags parser
 #include <gflags/gflags.h>
-// Communicating with Pi GPIO
-#include <wiringPi.h>
 // Input/output stream class to operate on files
 #include <fstream>
 // Input/output streams and functions
