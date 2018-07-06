@@ -39,6 +39,7 @@ int main() {
   // Set imu_sensor to use MatrixIOBus bus
   imu_sensor.Setup(&bus);
 
+  // Endless loop
   while (true) {
     // Overwrites imu_data with new data from IMU sensor
     imu_sensor.Read(&imu_data);

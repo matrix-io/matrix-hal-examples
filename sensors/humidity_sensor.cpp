@@ -39,6 +39,7 @@ int main() {
   // Set humidity_sensor to use MatrixIOBus bus
   humidity_sensor.Setup(&bus);
 
+  // Endless loop
   while (true) {
     // Overwrites humidity_data with new data from humidity sensor
     humidity_sensor.Read(&humidity_data);

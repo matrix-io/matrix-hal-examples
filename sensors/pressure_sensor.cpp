@@ -39,6 +39,7 @@ int main() {
   // Set pressure_sensor to use MatrixIOBus bus
   pressure_sensor.Setup(&bus);
 
+  // Endless loop
   while (true) {
     // Overwrites pressure_data with new data from pressure sensor
     pressure_sensor.Read(&pressure_data);

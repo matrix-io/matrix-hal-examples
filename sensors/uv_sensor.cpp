@@ -39,6 +39,7 @@ int main() {
   // Set uv_sensor to use MatrixIOBus bus
   uv_sensor.Setup(&bus);
 
+  // Endless loop
   while (true) {
     // Overwrites UVData object with new data
     uv_sensor.Read(&uv_data);
